@@ -18,6 +18,18 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.33</version>
 		</dependency>
+
+		<dependency> <!-- Esta nos permite crear el Pool de Conexiones -->
+			<groupId>com.mchange</groupId> 
+			<artifactId>c3p0</artifactId>
+			<version>0.9.5.5</version>
+		</dependency>
+
+		<dependency> <!--- Nos permite agregar detalle al Data Source en la consola -->
+			<groupId>com.mchange</groupId>
+			<artifactId>mchange-commons-java</artifactId>
+			<version>0.2.20</version>
+		</dependency>
 	</dependencies>
 
 	<build>
