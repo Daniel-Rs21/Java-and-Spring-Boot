@@ -44,6 +44,41 @@ public class CategoriaDAO {
     }
 
     public List<Categoria> listarConProductos() {
-        return null;
+        List<Categoria> resultado = new ArrayList<>();
+
+        try (con) {
+            PreparedStatement statement = con.prepareStatement("SELECT C.id, C.nombre, P.id, P.nombre, P.cantidad FROM CATEGORIA C INNER JOIN PRODUCTO P ON C.id = P.categoria_id");
+
+            try (statement) {
+                final ResultSet resultSet = statement.executeQuery();
+
+                try (resultSet) {
+                    while (resultSet.next()) {
+
+                        Integer categoriaId = resultSet.getInt("id");
+                        String categoriaNombre = resultSet.getString("nombre");
+
+                        var categoria = resultado.stream().
+                        filter(cat -> cat.getId().equals(categoriaId))
+                        .findAny().orElseGet(() -> {
+                            var cat = new Categoria(categoriaId, categoriaNombre);
+                            resultado.add(cat);
+                            return cat;
+                        });
+
+                        Producto producto = new Producto(
+                                resultSet.getInt("P.id"),
+                                resultSet.getString("P.nombre"),
+                                resultSet.getInt("P.cantidad"));
+
+                        categoria.agregar(producto);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultado;
     }
 }

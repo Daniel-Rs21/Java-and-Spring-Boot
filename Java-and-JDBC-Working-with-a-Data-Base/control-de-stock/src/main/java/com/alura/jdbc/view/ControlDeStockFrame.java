@@ -100,7 +100,6 @@ public class ControlDeStockFrame extends JFrame {
         comboCategoria = new JComboBox<>();
         comboCategoria.addItem(new Categoria(0, "Elige una Categoría"));
 
-        // TODO
         var categorias = this.categoriaController.listar();
         categorias.forEach(categoria -> comboCategoria.addItem(categoria));
 

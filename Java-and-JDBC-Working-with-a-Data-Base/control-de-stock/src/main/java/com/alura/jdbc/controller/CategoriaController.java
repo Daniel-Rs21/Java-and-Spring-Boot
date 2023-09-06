@@ -15,12 +15,10 @@ public class CategoriaController {
     }
 
 	public List<Categoria> listar() {
-		// TODO
 		return categoriaDAO.listarCategoria();
 	}
 
     public List<Categoria> cargaReporte() {
-        // TODO
-        return this.listar();
+        return this.categoriaDAO.listarConProductos();
     }
 }
