@@ -21,6 +21,6 @@ public class CategoriaController {
 
     public List<Categoria> cargaReporte() {
         // TODO
-        return categoriaDAO.cargaReporte();
+        return this.listar();
     }
 }

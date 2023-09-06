@@ -22,13 +22,11 @@ public class ProductoDAO {
         Integer cantidad = producto.getCantidad();
         Integer cantidadMaxima = 50;
 
-        final Connection con = new ConnectionFactory().recuperaConexion();
-
-        try (this.con) {
+        try {
             con.setAutoCommit(false);
 
             final PreparedStatement statement = con.prepareStatement(
-                    "INSERT INTO PRODUCTO (nombre, descripcion, cantidad) VALUES (?, ?, ?)",
+                    "INSERT INTO PRODUCTO (nombre, descripcion, cantidad, categoria_id) VALUES (?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
 
             try (statement) {
@@ -54,6 +52,7 @@ public class ProductoDAO {
         statement.setString(1, producto.getNombre());
         statement.setString(2, producto.getDescripcion());
         statement.setInt(3, producto.getCantidad());
+        statement.setInt(4, producto.getCategoriaId());
         statement.execute();
 
         final ResultSet resultSet = statement.getGeneratedKeys();
@@ -67,7 +66,7 @@ public class ProductoDAO {
     }
 
     public List<Producto> listarProducto() {
-        try (this.con) {
+        try {
 
             List<Producto> resultado = new ArrayList<>(); // Crea una lista para guardar los resultados
 
@@ -98,7 +97,7 @@ public class ProductoDAO {
     }
 
     public int eliminarProducto(Integer id) {
-        try {
+        try  {
             final PreparedStatement statement = con.prepareStatement("DELETE FROM PRODUCTO WHERE ID = ?");
 
             try (statement) {
@@ -115,6 +114,7 @@ public class ProductoDAO {
     }
 
     public int modificarProducto(Producto producto) {
+
         try {
             final PreparedStatement statement = con.prepareStatement(
                     "UPDATE PRODUCTO SET "
@@ -134,6 +134,38 @@ public class ProductoDAO {
 
                 return updateCount;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Producto> listarProducto(Integer categoriaId) {
+        try {
+
+            List<Producto> resultado = new ArrayList<>(); // Crea una lista para guardar los resultados
+
+            final PreparedStatement statement = con
+                    .prepareStatement("SELECT ID, NOMBRE, DESCRIPCION, CANTIDAD FROM PRODUCTO WHERE CATEGORIA_ID = ?");
+
+            try (statement) {
+                statement.setInt(1, categoriaId);
+                statement.execute(); // Ejecuta la consulta en comillas
+
+                final ResultSet resultSet = statement.getResultSet(); // Recupera el resultado de la consulta en un
+                                                                      // result set
+
+                try (resultSet) {
+                    while (resultSet.next()) { // Mientras haya un siguiente resultado crea añade una fila
+                        Producto fila = new Producto(resultSet.getInt(1),
+                                resultSet.getString(2),
+                                resultSet.getString(3),
+                                resultSet.getInt(4));
+                        resultado.add(fila);
+                    }
+                }
+            }
+
+            return resultado; // Devuelve la lista
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
