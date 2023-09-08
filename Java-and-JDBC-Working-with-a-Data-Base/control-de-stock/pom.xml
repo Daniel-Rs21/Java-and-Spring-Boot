@@ -9,7 +9,7 @@
 	<description>Proyecto para trabajar con bases de datos con JDBC</description>
 
 	<properties>
-		<java.version>20</java.version>
+		<java.version>20.0.1</java.version>
 	</properties>
 
 	<dependencies>
