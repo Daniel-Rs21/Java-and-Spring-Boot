@@ -1,0 +1,27 @@
+<persistence version="2.2"
+    xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+
+    <persistence-unit name="tienda" transaction-type="RESOURCE_LOCAL">
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" /> <!-- Driver de la
+            base de datos default de H2-->
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:C:\Users\DanielRs\OneDrive - Benemérita Universidad Autónoma de Puebla\Programación\Oracle ONE\Java-and-Spring-Boot\4-Java-and-JPA-Advanced-Queries-Performance-and-Complex-Models\db\database" /> <!-- ruta de la
+            base de datos local de H2 -->
+            <property name="javax.persistence.jdbc.user" value="sa" /> <!-- Usuario por default de la
+            base de datos H2 -->
+            <property name="javax.persistence.jdbc.password" value="1234" /> <!-- Contraseña por
+            default de la base de datos H2 -->
+
+            <property name="hibernate.show_sql" value="true" /> <!-- Muestra las consultas SQL que se
+            ejecutan -->
+            <property name="hibernate.format_sql" value="true" /> <!-- Formatea las consultas SQL que
+            se ejecutan -->
+            <property name="hibernate.hbm2ddl.auto" value="create-drop" /> <!-- Crea o actualiza la base
+            de datos -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" /> <!--
+            Dialecto para comunicarse con Hibernate -->
+        </properties>
+    </persistence-unit>
+</persistence>
